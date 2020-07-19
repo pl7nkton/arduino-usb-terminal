@@ -8,10 +8,11 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import io.sentry.core.Sentry
-import kotlinx.android.synthetic.main.activity_main.*
 import org.kabiri.android.usbterminal.viewmodel.MainActivityViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -29,13 +30,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // make the text view scrollable:
+        val tvOutput = findViewById<TextView>(R.id.tvOutput)
         tvOutput.movementMethod = ScrollingMovementMethod()
-
         // open the device and port when the permission is granted by user.
         viewModel.getGrantedDevice().observe(this, Observer { device ->
             viewModel.openDeviceAndPort(device)
         })
-
         viewModel.getLiveOutput().observe(this, Observer {
             val spannable = SpannableString(it.text)
             spannable.setSpan(
@@ -45,15 +45,15 @@ class MainActivity : AppCompatActivity() {
                 SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
             tvOutput.append(it.text)
         })
-
         // send the command to device when the button is clicked.
+        val btEnter = findViewById<Button>(R.id.btEnter)
+        val etInput = findViewById<EditText>(R.id.etInput)
         btEnter.setOnClickListener {
             val input = etInput.text.toString()
             if (viewModel.serialWrite(input))
                 etInput.setText("") // clear the terminal input.
             else Log.e(TAG, "The message was not sent to Arduino")
         }
-
         // handle the device mode.
         viewModel.handleDeviceMode(this)
     }
