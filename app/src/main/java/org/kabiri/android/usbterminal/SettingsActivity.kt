@@ -1,14 +1,14 @@
 package org.kabiri.android.usbterminal
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * Created by Ali Kabiri on 12.05.20.
  */
+@ExperimentalCoroutinesApi
 class SettingsActivity : AppCompatActivity() {
 
     companion object {
