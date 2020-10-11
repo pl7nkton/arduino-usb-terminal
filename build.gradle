@@ -2,7 +2,6 @@
 
 buildscript {
 
-    // versions
     ext {
         // app dependencies.
         kotlin_version = '1.4.10'
