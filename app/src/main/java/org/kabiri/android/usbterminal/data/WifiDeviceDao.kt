@@ -1,7 +1,10 @@
 package org.kabiri.android.usbterminal.data
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import org.kabiri.android.usbterminal.model.WifiDevice
 
 /**
@@ -11,7 +14,7 @@ import org.kabiri.android.usbterminal.model.WifiDevice
 @Dao
 interface WifiDeviceDao {
     @Query("SELECT * FROM wifiDevices ORDER BY simpleName")
-    fun getWifiDevices(): LiveData<List<WifiDevice>>
+    fun getWifiDevices(): Flow<List<WifiDevice>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(wifiDevices: List<WifiDevice>)
