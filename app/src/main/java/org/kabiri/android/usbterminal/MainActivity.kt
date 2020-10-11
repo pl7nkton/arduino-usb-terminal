@@ -12,9 +12,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import org.kabiri.android.usbterminal.viewmodel.MainActivityViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,10 +32,10 @@ class MainActivity : AppCompatActivity() {
         val tvOutput = findViewById<TextView>(R.id.tvOutput)
         tvOutput.movementMethod = ScrollingMovementMethod()
         // open the device and port when the permission is granted by user.
-        viewModel.getGrantedDevice().observe(this, Observer { device ->
+        viewModel.getGrantedDevice().observe(this, { device ->
             viewModel.openDeviceAndPort(device)
         })
-        viewModel.getLiveOutput().observe(this, Observer {
+        viewModel.getLiveOutput().observe(this, {
             val spannable = SpannableString(it.text)
             spannable.setSpan(
                 it.getAppearance(this),

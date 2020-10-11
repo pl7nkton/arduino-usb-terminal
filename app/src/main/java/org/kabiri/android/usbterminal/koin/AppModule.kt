@@ -10,7 +10,7 @@ import org.kabiri.android.usbterminal.data.WifiDeviceRepository
 import org.kabiri.android.usbterminal.network.wifi.NsdHelper
 import org.kabiri.android.usbterminal.viewmodel.MainActivityViewModel
 import org.kabiri.android.usbterminal.viewmodel.WifiDeviceListViewModel
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 /**

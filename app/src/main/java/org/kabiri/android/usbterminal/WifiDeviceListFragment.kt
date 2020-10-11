@@ -1,4 +1,4 @@
-package org.kabiri.android.usbterminal
+ package org.kabiri.android.usbterminal
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import org.kabiri.android.usbterminal.databinding.FragmentWifiDeviceListBinding
 import org.kabiri.android.usbterminal.ui.adapter.WifiDeviceAdapter
 import org.kabiri.android.usbterminal.viewmodel.WifiDeviceListViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-/**
+ /**
  * Created by Ali Kabiri on 23.05.20.
  */
 class WifiDeviceListFragment: Fragment() {
@@ -42,16 +41,16 @@ class WifiDeviceListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.handleDeviceMode(requireContext())
+        viewModel.handleDeviceMode(requireContext()) // read the device mode and react to it!
     }
 
     private fun subscribeUi(adapter: WifiDeviceAdapter,
                             serverList: RecyclerView, placeholder: TextView) {
         viewModel.observeDevices()
-        viewModel.wifiDevices.observe(viewLifecycleOwner, Observer { wifiDevices ->
+        viewModel.wifiDevices.observe(viewLifecycleOwner, { wifiDevices ->
             adapter.submitList(wifiDevices)
         })
-        viewModel.showRemoteServers.observe(viewLifecycleOwner, Observer {
+        viewModel.showRemoteServers.observe(viewLifecycleOwner, {
             // show a place holder for the list adapter saying that
             // this device is a server for itself!
             updatePlaceHolderVisibility(
