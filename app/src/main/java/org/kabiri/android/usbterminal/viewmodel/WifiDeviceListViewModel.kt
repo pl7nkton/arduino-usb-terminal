@@ -2,9 +2,11 @@ package org.kabiri.android.usbterminal.viewmodel
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.kabiri.android.usbterminal.R
 import org.kabiri.android.usbterminal.SettingsActivity
 import org.kabiri.android.usbterminal.data.SettingsReader
@@ -18,17 +20,18 @@ import org.koin.core.inject
  *  Created by Ali Kabiri on 23.05.20.
  * The ViewModel for WifiDeviceListFragment
  */
+@ExperimentalCoroutinesApi
 class WifiDeviceListViewModel internal constructor(
     private val wifiDeviceRepository: WifiDeviceRepository
 ): ViewModel(), KoinComponent {
 
     private val mNsdHelper by inject<NsdHelper>()
     private val settings by inject<SettingsReader>()
-    val wifiDevices: LiveData<List<WifiDevice>> = wifiDeviceRepository.getWifiDevices()
+    val wifiDevices: Flow<List<WifiDevice>> = wifiDeviceRepository.getWifiDevices()
 
-    private val _showRemoteServers = MutableLiveData<Boolean>().apply { postValue(false) }
-    val showRemoteServers: LiveData<Boolean> // avoid having public mutable live data.
-        get() = _showRemoteServers
+    private val _deviceState = MutableStateFlow(DeviceState.OFFLINE)
+    val deviceState: StateFlow<DeviceState> // avoid having public mutable live data.
+        get() = _deviceState
 
     /**
      * checks which device mode is selected by the user in the settings and
@@ -40,17 +43,17 @@ class WifiDeviceListViewModel internal constructor(
             Log.d(SettingsActivity.TAG, "device mode selected: $it")
             when (it) {
                 context.getString(R.string.settings_value_device_mode_server) -> {
-                    _showRemoteServers.postValue(false)
+                    _deviceState.value = DeviceState.SERVER
                     mNsdHelper.unregisterService(context)
                     mNsdHelper.registerService(context)
                 }
                 context.getString(R.string.settings_value_device_mode_client) -> {
-                    _showRemoteServers.postValue(true)
+                    _deviceState.value = DeviceState.CLIENT
                     mNsdHelper.unregisterService(context)
                     mNsdHelper.discoverService(context)
                 }
                 else -> {
-                    _showRemoteServers.postValue(false)
+                    _deviceState.value = DeviceState.OFFLINE
                     mNsdHelper.unregisterService(context)
                 }
             }
@@ -65,4 +68,10 @@ class WifiDeviceListViewModel internal constructor(
             wifiDeviceRepository.insert(device)
         }
     }
+}
+
+enum class DeviceState {
+    SERVER,
+    CLIENT,
+    OFFLINE
 }
