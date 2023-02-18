@@ -6,6 +6,7 @@ jobs:
       image: ubuntu-2004:current
     resource_class: arm.medium
     steps:
+      - run: lsb_release -a
       - run: yes | sudo apt install android-sdk sdkmanager
       - run: |
           export ANDROID_HOME=/usr/lib/android-sdk
