@@ -22,7 +22,7 @@ commands:
 jobs:
   android-test:
     machine:
-      image: ubuntu-2204:current
+      image: android:2022.12.1
     resource_class: large
     steps:
       - run: lsb_release -a
