@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   android-test:
     machine:
-      image: ubuntu-2004:current
+      image: ubuntu-2004:2022.04.1
     resource_class: arm.medium
     steps:
       - run: lsb_release -a
