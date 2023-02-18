@@ -41,7 +41,7 @@ jobs:
           export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
           echo $ANDROID_HOME
           echo $PATH
-          ./gradlew assembleDebug
+          ./gradlew pixel2api31DebugAndroidTest
 
 workflows:
   workflow:
