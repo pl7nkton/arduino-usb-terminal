@@ -23,7 +23,7 @@ jobs:
   android-test:
     machine:
       image: ubuntu-2204:current
-    resource_class: arm.medium
+    resource_class: medium
     steps:
       - run: lsb_release -a
       - checkout
