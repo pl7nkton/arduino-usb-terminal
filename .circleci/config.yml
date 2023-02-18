@@ -8,9 +8,8 @@ jobs:
     steps:
       - run: lsb_release -a
       - run: (yes || true) | sudo apt install sdkmanager
-      - run: (yes || true) | sudo apt install android-sdk
+      - run: (yes || true) | sudo sdkmanager "tools" "platform-tools" "build-tools;33.0.1" "platforms;android-33" "emulator;31.3.9"
       - run: sudo chmod -R 777 /opt/android-sdk
-      - run: (yes || true) | sdkmanager "tools" "platform-tools" "build-tools;33.0.1" "platforms;android-33" "emulator;31.3.9"
       - run: (yes || true) | sdkmanager --licenses
       - run: |
           export ANDROID_HOME=/usr/lib/android-sdk
