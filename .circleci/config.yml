@@ -17,7 +17,7 @@ commands:
       - save_cache:
           paths:
             - ~/.gradle/caches
-          key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
 
 jobs:
   android-test:
