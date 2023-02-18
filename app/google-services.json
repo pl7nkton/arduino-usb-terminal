@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:00000000:android:doesntmatter",
         "android_client_info": {
-          "package_name": "com.doesntmatter.usbterminal"
+          "package_name": "org.kabiri.android.usbterminal"
         }
       },
       "oauth_client": [
