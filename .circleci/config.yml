@@ -7,13 +7,13 @@ jobs:
     resource_class: arm.medium
     steps:
       - run: lsb_release -a
-      - run: yes | sudo apt install sdkmanager
-      - run: yes | sudo apt install android-sdk
+      - run: (yes || true) | sudo apt install sdkmanager
+      - run: (yes || true) | sudo apt install android-sdk
       - run: |
           export ANDROID_HOME=/usr/lib/android-sdk
           export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
-      - run: yes | sdkmanager "tools" "platform-tools" "build-tools;33.0.1" "platforms;android-33" "emulator;31.3.9"
-      - run: yes | sdkmanager --licenses
+      - run: (yes || true) | sdkmanager "tools" "platform-tools" "build-tools;33.0.1" "platforms;android-33" "emulator;31.3.9"
+      - run: (yes || true) | sdkmanager --licenses
       - run: ./gradlew pixel2api31DebugAndroidTest
 
 workflows:
