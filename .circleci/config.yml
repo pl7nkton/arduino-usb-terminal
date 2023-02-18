@@ -32,6 +32,7 @@ jobs:
       - run: ./gradlew tasks
       - save_gradle_cache
 #       - run: (yes || true) | sudo apt install sdkmanager
+      - run: sdkmanager --list
       - run: (yes || true) | sdkmanager "tools" "platform-tools" "build-tools;33.0.1" "platforms;android-33" "emulator;31.3.9"
 #       - run: sudo chmod -R 777 /opt/android-sdk
       - run: (yes || true) | sdkmanager --licenses
