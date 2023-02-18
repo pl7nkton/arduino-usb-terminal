@@ -33,8 +33,11 @@ jobs:
       - run: sudo chmod -R 777 /opt/android-sdk
       - run: (yes || true) | sdkmanager --licenses
       - run: |
+          ls -la /opt/android-sdk
           export ANDROID_HOME=/opt/android-sdk
           export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+          echo $ANDROID_HOME
+          echo $PATH
       - run: echo $ANDROID_HOME
       - run: ls -la $ANDROID_HOME
       - run: python3 scripts/generateKsPropFile.py
