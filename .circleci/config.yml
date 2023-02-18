@@ -23,7 +23,7 @@ jobs:
   android-test:
     machine:
       image: android:2022.12.1
-    resource_class: xlarge
+    resource_class: large
     steps:
       - run: lsb_release -a
       - checkout
