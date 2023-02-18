@@ -7,7 +7,8 @@ jobs:
     resource_class: arm.medium
     steps:
       - run: lsb_release -a
-      - run: yes | sudo apt install android-sdk sdkmanager
+      - run: yes | sudo apt install android-sdk
+      - run: yes | sudo apt install sdkmanager
       - run: |
           export ANDROID_HOME=/usr/lib/android-sdk
           export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
