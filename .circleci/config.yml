@@ -31,14 +31,11 @@ jobs:
       - restore_gradle_cache
       - run: ./gradlew tasks
       - save_gradle_cache
-      - run: (yes || true) | sudo apt install sdkmanager
-      - run: (yes || true) | sudo sdkmanager "tools" "platform-tools" "build-tools;33.0.1" "platforms;android-33" "emulator;31.3.9"
-      - run: sudo chmod -R 777 /opt/android-sdk
+#       - run: (yes || true) | sudo apt install sdkmanager
+      - run: (yes || true) | sdkmanager "tools" "platform-tools" "build-tools;33.0.1" "platforms;android-33" "emulator;31.3.9"
+#       - run: sudo chmod -R 777 /opt/android-sdk
       - run: (yes || true) | sdkmanager --licenses
       - run: |
-          ls -la /opt/android-sdk
-          export ANDROID_HOME=/opt/android-sdk
-          export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
           echo $ANDROID_HOME
           echo $PATH
           ./gradlew pixel2api31DebugAndroidTest
