@@ -32,16 +32,14 @@ jobs:
       - run: (yes || true) | sudo sdkmanager "tools" "platform-tools" "build-tools;33.0.1" "platforms;android-33" "emulator;31.3.9"
       - run: sudo chmod -R 777 /opt/android-sdk
       - run: (yes || true) | sdkmanager --licenses
+      - run: python3 scripts/generateKsPropFile.py
       - run: |
           ls -la /opt/android-sdk
           export ANDROID_HOME=/opt/android-sdk
           export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
           echo $ANDROID_HOME
           echo $PATH
-      - run: echo $ANDROID_HOME
-      - run: ls -la $ANDROID_HOME
-      - run: python3 scripts/generateKsPropFile.py
-      - run: ./gradlew pixel2api31DebugAndroidTest
+          ./gradlew pixel2api31DebugAndroidTest
       - save_gradle_cache
 
 workflows:
