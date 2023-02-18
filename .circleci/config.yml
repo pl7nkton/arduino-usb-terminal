@@ -1,5 +1,24 @@
 version: 2.1
 
+commands:
+  restore_gradle_cache:
+    steps:
+      - restore_cache:
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+
+  save_gradle_cache:
+    steps:
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+          key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
+
 jobs:
   android-test:
     machine:
@@ -8,6 +27,7 @@ jobs:
     steps:
       - checkout
       - run: lsb_release -a
+      - restore_gradle_cache
       - run: (yes || true) | sudo apt install sdkmanager
       - run: (yes || true) | sudo sdkmanager "tools" "platform-tools" "build-tools;33.0.1" "platforms;android-33" "emulator;31.3.9"
       - run: sudo chmod -R 777 /opt/android-sdk
@@ -17,6 +37,7 @@ jobs:
           export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
       - run: python3 scripts/generateKsPropFile.py
       - run: ./gradlew pixel2api31DebugAndroidTest
+      - save_gradle_cache
 
 workflows:
   workflow:
