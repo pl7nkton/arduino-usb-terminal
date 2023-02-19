@@ -5,6 +5,7 @@ buildscript {
         kotlin_version = '1.7.10'
         hilt_version = '2.44'
         firebase_bom_version = '30.5.0'
+        jacoco_version = '0.8.8'
     }
     repositories {
         google()
