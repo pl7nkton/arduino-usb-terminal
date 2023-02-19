@@ -33,7 +33,7 @@ jobs:
       - run: python3 scripts/generateKsPropFile.py
       - run: sdkmanager --list
       - android/run-tests:
-        system-image: system-images;android-29;default;x86
+        system-image: system-images;android-31;default;x86_64
 
 workflows:
   workflow:
