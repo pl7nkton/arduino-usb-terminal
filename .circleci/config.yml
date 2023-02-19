@@ -21,6 +21,7 @@ jobs:
       - android/start-emulator:
           avd-name: test
       - android/run-tests
+      - run: ./gradlew pixel2api31DebugAndroidTest --stacktrace
 
 workflows:
   workflow:
