@@ -37,7 +37,9 @@ jobs:
       - run: (yes || true) | sdkmanager --licenses
       - run: ./gradlew pixel2api30DebugAndroidTest --stacktrace
       - store_test_results:
-        path: app/build/mergedReportDir/jacocoTestReport/jacocoTestReport.xml
+          path: app/build/mergedReportDir/jacocoTestReport/jacocoTestReport.xml
+      - store_artifacts:
+          path: app/build/mergedReportDir
 
 workflows:
   workflow:
