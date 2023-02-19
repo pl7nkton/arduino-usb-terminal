@@ -32,7 +32,7 @@ jobs:
       - checkout
       - run: python3 scripts/generateKsPropFile.py
       - run: sdkmanager --list
-      - android/run-ui-tests:
+      - android/run-tests:
         system-image: system-images;android-29;default;x86
 
 workflows:
