@@ -2,25 +2,6 @@ version: 2.1
 orbs:
   android: circleci/android@2.1.2
 
-commands:
-  restore_gradle_cache:
-    steps:
-      - restore_cache:
-          key: v1-gradle-wrapper-{{ arch }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - restore_cache:
-          key: v1-gradle-cache-{{ arch }}-{{ checksum "build.gradle" }}
-
-  save_gradle_cache:
-    steps:
-      - save_cache:
-          paths:
-            - ~/.gradle/wrapper
-          key: v1-gradle-wrapper-{{ arch }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - save_cache:
-          paths:
-            - ~/.gradle/caches
-          key: v1-gradle-cache-{{ arch }}-{{ checksum "build.gradle" }}
-
 jobs:
   android-test:
     executor:
@@ -32,8 +13,12 @@ jobs:
       - checkout
       - run: python3 scripts/generateKsPropFile.py
       - run: sdkmanager --list
-      - android/run-tests:
-        system-image: system-images;android-31;default;x86_64
+      - android/create-avd:
+          avd-name: myavd
+          install: true
+          system-image: system-images;android-31;default;x86_64
+      - android/start-emulator
+      - android/run-tests
 
 workflows:
   workflow:
