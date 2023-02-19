@@ -2,26 +2,44 @@ version: 2.1
 orbs:
   android: circleci/android@2.1.2
 
+commands:
+  restore_gradle_cache:
+    steps:
+      - restore_cache:
+          key: v1-gradle-wrapper-{{ arch }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: v1-gradle-cache-{{ arch }}-{{ checksum "build.gradle" }}
+
+  save_gradle_cache:
+    steps:
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ arch }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+          key: v1-gradle-cache-{{ arch }}-{{ checksum "build.gradle" }}
+
 jobs:
   android-test:
-    executor:
-      name: android/android-machine
-      resource-class: large
-      tag: 2022.12.1
+    machine:
+      image: android:2022.12.1
+    resource_class: large
     steps:
       - run: lsb_release -a
       - checkout
       - run: python3 scripts/generateKsPropFile.py
       - run: python3 scripts/generateGoogleServicesJson.py
+      - restore_gradle_cache
+      - run: ./gradlew tasks
+      - save_gradle_cache
       - run: sdkmanager --list
-      - android/create-avd:
-          avd-name: test
-          install: true
-          system-image: system-images;android-30;google_atd;x86
-      - android/start-emulator:
-          avd-name: test
-      - android/run-tests
+      - run: (yes || true) | sdkmanager "tools" "platform-tools" "build-tools;33.0.2" "platforms;android-33" "system-images;android-30;google_atd;x86"
+      - run: (yes || true) | sdkmanager --licenses
       - run: ./gradlew pixel2api30DebugAndroidTest --stacktrace
+      - store_artifacts:
+          path: app/build/reports/androidTests/managedDevice
 
 workflows:
   workflow:
