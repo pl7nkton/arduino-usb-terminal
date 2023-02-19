@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  android: circleci/android@2.1.2
 
 commands:
   restore_gradle_cache:
