@@ -14,10 +14,11 @@ jobs:
       - run: python3 scripts/generateKsPropFile.py
       - run: sdkmanager --list
       - android/create-avd:
-          avd-name: myavd
+          avd-name: test
           install: true
           system-image: system-images;android-31;default;x86_64
       - android/start-emulator
+          avd-name: test
       - android/run-tests
 
 workflows:
