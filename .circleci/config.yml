@@ -17,7 +17,7 @@ jobs:
           avd-name: test
           install: true
           system-image: system-images;android-31;default;x86_64
-      - android/start-emulator
+      - android/start-emulator:
           avd-name: test
       - android/run-tests
 
