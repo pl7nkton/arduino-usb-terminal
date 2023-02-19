@@ -23,9 +23,9 @@ commands:
 
 jobs:
   android-test:
-    machine:
-      image: android:2022.12.1
-    resource_class: large
+    executor:
+      name: android/android-machine
+      resource_class: large
     steps:
       - run: lsb_release -a
       - checkout
