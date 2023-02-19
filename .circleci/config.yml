@@ -12,6 +12,7 @@ jobs:
       - run: lsb_release -a
       - checkout
       - run: python3 scripts/generateKsPropFile.py
+      - run: python3 scripts/generateGoogleServicesJson.py
       - run: sdkmanager --list
       - android/create-avd:
           avd-name: test
