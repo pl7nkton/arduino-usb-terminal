@@ -27,7 +27,7 @@ jobs:
       image: android:2022.12.1
     resource_class: large
     steps:
-#       - run: lsb_release -a
+      - run: lsb_release -a
       - checkout
       - run: python3 scripts/generateKsPropFile.py
       - android/run-ui-tests:
