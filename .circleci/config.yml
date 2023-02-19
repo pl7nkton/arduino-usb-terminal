@@ -27,22 +27,10 @@ jobs:
       image: android:2022.12.1
     resource_class: large
     steps:
-      - run: lsb_release -a
+#       - run: lsb_release -a
       - checkout
       - run: python3 scripts/generateKsPropFile.py
       - android/run-ui-tests:
-#       - restore_gradle_cache
-#       - run: ./gradlew tasks
-#       - save_gradle_cache
-#       - run: du -hs $ANDROID_HOME
-#       - run: sdkmanager --list
-#       - run: (yes || true) | sdkmanager "tools" "platform-tools" "build-tools;33.0.2" "platforms;android-33" "system-images;android-31;google_apis;x86_64"
-#       - run: (yes || true) | sdkmanager --licenses
-#       - run: echo $ANDROID_HOME
-#       - run: du -hs $ANDROID_HOME
-#       - run: ./gradlew pixel2api31DebugAndroidTest --stacktrace
-#       - store_artifacts:
-#           path: app/build/reports/androidTests/managedDevice
 
 workflows:
   workflow:
