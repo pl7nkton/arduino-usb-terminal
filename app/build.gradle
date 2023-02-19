@@ -54,10 +54,10 @@ android {
 
         managedDevices {
             devices {
-                pixel2api31 (com.android.build.api.dsl.ManagedVirtualDevice) {
+                pixel2api30 (com.android.build.api.dsl.ManagedVirtualDevice) {
                     device = "Pixel 2"
-                    apiLevel = 31
-                    systemImageSource = "google"
+                    apiLevel = 30
+                    systemImageSource = "google_atd"
                 }
             }
         }
